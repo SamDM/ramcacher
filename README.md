@@ -172,10 +172,10 @@ cache_rm()
 cached_fn <- cache_mem(verbose = TRUE) %at% function(x) x * 2
 
 cached_fn(5)  # Cache miss
-#> [cache_mem] [fn] [cached: FALSE] [name: fn::hash_fn.c3b84431-args.eb191209_v.0] [run: TRUE]
+#> [cache_mem] [fn] [cached: FALSE] [name: fn::hash_fn.2a7dacd3-args.eb191209_v.0] [run: TRUE]
 #> [1] 10
 cached_fn(5)  # Cache hit
-#> [cache_mem] [fn] [cached: TRUE] [name: fn::hash_fn.c3b84431-args.eb191209_v.0] [run: FALSE]
+#> [cache_mem] [fn] [cached: TRUE] [name: fn::hash_fn.2a7dacd3-args.eb191209_v.0] [run: FALSE]
 #> [1] 10
 ```
 
@@ -183,26 +183,26 @@ cached_fn(5)  # Cache hit
 
 If you use ramcacher in your research, please cite it as:
 
-### BibTeX
+### [BibTeX](https://www.bibtex.org/)
 
 ``` bibtex
-@software{demeyer2024ramcacher,
+@software{demeyer2025ramcacher,
   author = {De Meyer, Sam},
   title = {ramcacher: In-Memory Caching for Functions and Expressions in R},
-  year = {2024},
+  year = {2025},
   url = {https://github.com/SamDM/ramcacher},
   version = {0.1.0}
 }
 ```
 
-### Hayagriva (Typst)
+### [Hayagriva](https://github.com/typst/hayagriva) (Typst)
 
 ``` yaml
 ramcacher:
   type: software
   author: De Meyer, Sam
   title: "ramcacher: In-Memory Caching for Functions and Expressions in R"
-  date: 2024
+  date: 2025
   url: https://github.com/SamDM/ramcacher
   version: "0.1.0"
 ```
