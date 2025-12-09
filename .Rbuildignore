@@ -4,3 +4,4 @@
 ^\.devcontainer$
 ^\.Rprofile$
 ^\.vscode$
+^CLAUDE\.md$
