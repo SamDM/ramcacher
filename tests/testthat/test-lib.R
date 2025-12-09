@@ -1,12 +1,11 @@
 # ------------------------------------------- %at% operator
 
 test_that("%at% applies function to argument", {
-
   result <- sqrt %at% 16
   expect_equal(result, 4)
 })
 test_that("%at% works with anonymous functions", {
-expected <- 4
+  expected <- 4
   result <- (function(x) x + 1) %at% 3
   expect_equal(result, expected)
 })
@@ -196,7 +195,7 @@ test_that("cache_mem version parameter creates separate cache entries", {
   expect_equal(call_count, 2)
 
   # Calling v1 again should use cache
-cached_v1(1)
+  cached_v1(1)
   expect_equal(call_count, 2)
 })
 
@@ -297,7 +296,9 @@ test_that("cache_mem expression with name allows custom cache names", {
 test_that("cache_mem expression verbose outputs messages", {
   cache_rm()
   expect_message(
-    cache_mem(verbose = TRUE) %at% { 1 + 1 },
+    cache_mem(verbose = TRUE) %at% {
+      1 + 1
+    },
     "cache_mem"
   )
 })
@@ -310,5 +311,5 @@ test_that("cache_mem expression stores in cache_list", {
   }
 
   # Should have at least one entry
-expect_gte(length(cache_list()), 1)
+  expect_gte(length(cache_list()), 1)
 })
