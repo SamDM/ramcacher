@@ -22,11 +22,20 @@ ramcacher provides in-memory caching for R functions and expressions. It stores 
 
 ## Installation
 
-You can install the development version of ramcacher from [GitHub](https://github.com/) with:
+You can install the development version of ramcacher from [GitHub](https://github.com/) with any of the following:
 
 ``` r
+# Using pak
 # install.packages("pak")
-pak::pak("SamDM/ramcacher")
+pak::pkg_install("SamDM/ramcacher")
+
+# Using remotes
+# install.packages("remotes")
+remotes::install_github("SamDM/ramcacher")
+
+# Using devtools
+# install.packages("devtools")
+devtools::install_github("SamDM/ramcacher")
 ```
 
 ## Example

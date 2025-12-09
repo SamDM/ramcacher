@@ -14,11 +14,20 @@ repeated expensive computations during interactive data analysis.
 ## Installation
 
 You can install the development version of ramcacher from
-[GitHub](https://github.com/) with:
+[GitHub](https://github.com/) with any of the following:
 
 ``` r
+# Using pak
 # install.packages("pak")
-pak::pak("SamDM/ramcacher")
+pak::pkg_install("SamDM/ramcacher")
+
+# Using remotes
+# install.packages("remotes")
+remotes::install_github("SamDM/ramcacher")
+
+# Using devtools
+# install.packages("devtools")
+devtools::install_github("SamDM/ramcacher")
 ```
 
 ## Example
@@ -163,9 +172,9 @@ cache_rm()
 cached_fn <- cache_mem(verbose = TRUE) %at% function(x) x * 2
 
 cached_fn(5)  # Cache miss
-#> [cache_mem] [fn] [cached: FALSE] [name: fn::hash_fn.60e37a0c-args.eb191209_v.0] [run: TRUE]
+#> [cache_mem] [fn] [cached: FALSE] [name: fn::hash_fn.e4365fa8-args.eb191209_v.0] [run: TRUE]
 #> [1] 10
 cached_fn(5)  # Cache hit
-#> [cache_mem] [fn] [cached: TRUE] [name: fn::hash_fn.60e37a0c-args.eb191209_v.0] [run: FALSE]
+#> [cache_mem] [fn] [cached: TRUE] [name: fn::hash_fn.e4365fa8-args.eb191209_v.0] [run: FALSE]
 #> [1] 10
 ```
