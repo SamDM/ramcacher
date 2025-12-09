@@ -121,7 +121,7 @@ cache_mem <- function(version = 0, name = NULL, verbose = FALSE, force = FALSE) 
 #' @export
 cache_get <- function(name) {
   .cache_init()
-  .cache_memory[[name]]
+  get(".cache_memory", .GlobalEnv)[[name]]
 }
 
 #' Set one element of the computation cache
@@ -167,7 +167,7 @@ cache_rm <- function(names = NULL) {
 #' @export
 cache_list <- function() {
   .cache_init()
-  names(.cache_memory)
+  names(get(".cache_memory", .GlobalEnv))
 }
 
 # ------------------------------------------- private
