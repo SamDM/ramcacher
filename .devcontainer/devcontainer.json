@@ -1,0 +1,27 @@
+{
+  "name": "singleplant-var-bethedge",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "mounts": [
+    "source=${localEnv:HOME},target=${localEnv:HOME},type=bind,consistency=cached,readonly",
+    "source=${localEnv:SSH_AUTH_SOCK},target=/ssh-agent,type=bind"
+  ],
+  "remoteEnv": {
+    "GIT_CONFIG_GLOBAL": "${localEnv:HOME}/.gitconfig",
+    "SSH_AUTH_SOCK": "/ssh-agent"
+  },
+  "runArgs": [
+    "--network=host"
+  ],
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "mathematic.vscode-pdf",
+        "reditorsupport.r",
+        "rdebugger.r-debugger",
+        "mechatroner.rainbow-csv"
+      ]
+    }
+  }
+}
