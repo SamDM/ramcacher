@@ -1,9 +1,12 @@
 Package: ramcacher
-Title: What the Package Does (One Line, Title Case)
+Title: In-Memory Caching for Functions and Expressions
 Version: 0.0.0.9000
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
+    person("Sam", "De Meyer", , "sam.demeyer93@gmail.com", role = c("aut", "cre"))
+Description: Cache the results of functions and expressions in RAM for faster
+    subsequent retrieval. Automatically detects when code or arguments change
+    to invalidate stale cache entries. Provides utilities to manage cache
+    entries including listing, getting, setting, and clearing cached values.
 License: GPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
