@@ -156,3 +156,31 @@ cached_fn <- cache_mem(verbose = TRUE) %at% function(x) x * 2
 cached_fn(5)  # Cache miss
 cached_fn(5)  # Cache hit
 ```
+
+## Citation
+
+If you use ramcacher in your research, please cite it as:
+
+### BibTeX
+
+```bibtex
+@software{demeyer2024ramcacher,
+  author = {De Meyer, Sam},
+  title = {ramcacher: In-Memory Caching for Functions and Expressions in R},
+  year = {2024},
+  url = {https://github.com/SamDM/ramcacher},
+  version = {0.1.0}
+}
+```
+
+### Hayagriva (Typst)
+
+```yaml
+ramcacher:
+  type: software
+  author: De Meyer, Sam
+  title: "ramcacher: In-Memory Caching for Functions and Expressions in R"
+  date: 2024
+  url: https://github.com/SamDM/ramcacher
+  version: "0.1.0"
+```
