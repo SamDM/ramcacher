@@ -77,7 +77,6 @@ RUN ln -s $NVM_DIR/versions/node/v${NODEJS_VERSION}*/bin/node /usr/local/bin/nod
 RUN wget -qO- https://cloud.r-project.org/bin/linux/debian/marutter_pubkey.asc | tee /etc/apt/trusted.gpg.d/cran_debian_key.asc \
     && add-apt-repository "deb https://cloud.r-project.org/bin/linux/debian $(lsb_release -cs)-cran40/" \
     && apt-get update && apt-get install -y --no-install-recommends \
-      r-base \
       libcurl4-openssl-dev \
       libfontconfig1-dev \
       libfreetype6-dev \
@@ -89,6 +88,8 @@ RUN wget -qO- https://cloud.r-project.org/bin/linux/debian/marutter_pubkey.asc |
       libssl-dev \
       libtiff5-dev \
       libxml2-dev \
+      pandoc \
+      r-base \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
