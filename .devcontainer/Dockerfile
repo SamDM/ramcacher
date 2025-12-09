@@ -97,6 +97,10 @@ RUN wget -qO- https://cloud.r-project.org/bin/linux/debian/marutter_pubkey.asc |
 RUN R -e "install.packages(c('languageserver', 'httpgd'), Ncpus=parallel::detectCores())" \
     && R -e "install.packages('httpgd', repos = c('https://community.r-multiverse.org', 'https://cloud.r-project.org'), Ncpus=parallel::detectCores())"
 
+# R packages: project dependencies
+RUN R -e "install.packages('devtools', Ncpus=parallel::detectCores())"
+
+
 # -----
 # Done!
 
