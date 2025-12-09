@@ -2,16 +2,16 @@
 % Please edit documentation in R/lib.R
 \name{cache_get}
 \alias{cache_get}
-\title{Get one element from the computation cache}
+\title{Get one element from the computation cache.}
 \usage{
 cache_get(name)
 }
 \arguments{
-\item{name}{Name of cache value}
+\item{name}{Name of cache value.}
 }
 \value{
-The cached value, or NULL if not found
+The cached value, or NULL if not found.
 }
 \description{
-Get one element from the computation cache
+Get one element from the computation cache.
 }

@@ -19,7 +19,7 @@ The version number will still be appended to the name.}
 \item{force}{Force a re-run of the cached code.}
 }
 \value{
-A cached function or the result of a cached expression
+A cached function or the result of a cached expression.
 }
 \description{
 The cached function/expression is executed once, the output is saved in RAM.

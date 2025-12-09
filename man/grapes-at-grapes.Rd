@@ -6,6 +6,14 @@
 \usage{
 f \%at\% x
 }
+\arguments{
+\item{f}{A function to apply.}
+
+\item{x}{The argument to pass to \code{f}.}
+}
+\value{
+The result of \code{f(x)}.
+}
 \description{
 \code{f \%at\% x} is equivalent to \code{f(x)}.
 In some cases this is convenient.

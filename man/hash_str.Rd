@@ -2,16 +2,16 @@
 % Please edit documentation in R/lib.R
 \name{hash_str}
 \alias{hash_str}
-\title{Turns an arbitrary string into a hash digest}
+\title{Turn an arbitrary string into a hash digest.}
 \usage{
-hash_str(food)
+hash_str(x)
 }
 \arguments{
-\item{food}{The string to hash}
+\item{x}{The string to hash.}
 }
 \value{
-A hash digest string
+A hash digest string.
 }
 \description{
-Turns an arbitrary string into a hash digest
+Turn an arbitrary string into a hash digest.
 }

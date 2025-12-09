@@ -2,18 +2,18 @@
 % Please edit documentation in R/lib.R
 \name{cache_set}
 \alias{cache_set}
-\title{Set one element of the computation cache}
+\title{Set one element of the computation cache.}
 \usage{
 cache_set(name, value)
 }
 \arguments{
-\item{name}{Name of cache value}
+\item{name}{Name of cache value.}
 
-\item{value}{The new value}
+\item{value}{The new value.}
 }
 \value{
-the value
+The value.
 }
 \description{
-Set one element of the computation cache
+Set one element of the computation cache.
 }

@@ -4,19 +4,24 @@
 #' In some cases this is convenient.
 #' Especially to prevent having to put brackets around `x` if `x` is a long piece of code.
 #'
+#' @param f A function to apply.
+#' @param x The argument to pass to `f`.
+#'
+#' @return The result of `f(x)`.
+#'
 #' @export
 `%at%` <- function(f, x) {
   f({{ x }})
 }
 
-#' Turns an arbitrary string into a hash digest
+#' Turn an arbitrary string into a hash digest.
 #'
-#' @param food The string to hash
+#' @param x The string to hash.
 #'
-#' @return A hash digest string
+#' @return A hash digest string.
 #'
 #' @export
-hash_str <- function(food) digest::digest(food, algo = "xxhash32")
+hash_str <- function(x) digest::digest(x, algo = "xxhash32")
 
 #' Cache a function or expression in memory.
 #'
@@ -42,7 +47,7 @@ hash_str <- function(food) digest::digest(food, algo = "xxhash32")
 #' @param verbose Output information about caching mechanism.
 #' @param force Force a re-run of the cached code.
 #'
-#' @return A cached function or the result of a cached expression
+#' @return A cached function or the result of a cached expression.
 #'
 #' @examples
 #' # Cache a function
@@ -112,11 +117,11 @@ cache_mem <- function(version = 0, name = NULL, verbose = FALSE, force = FALSE) 
   }
 }
 
-#' Get one element from the computation cache
+#' Get one element from the computation cache.
 #'
-#' @param name Name of cache value
+#' @param name Name of cache value.
 #'
-#' @return The cached value, or NULL if not found
+#' @return The cached value, or NULL if not found.
 #'
 #' @export
 cache_get <- function(name) {
@@ -124,12 +129,12 @@ cache_get <- function(name) {
   get(".cache_memory", .GlobalEnv)[[name]]
 }
 
-#' Set one element of the computation cache
+#' Set one element of the computation cache.
 #'
-#' @param name Name of cache value
-#' @param value The new value
+#' @param name Name of cache value.
+#' @param value The new value.
 #'
-#' @returns the value
+#' @return The value.
 #'
 #' @export
 cache_set <- function(name, value) {
@@ -140,11 +145,13 @@ cache_set <- function(name, value) {
   value
 }
 
-#' Clears the computation cache.
+#' Clear the computation cache.
 #'
 #' Clears all values from the cache, making it empty again.
 #'
 #' @param names Remove only the given names.
+#'
+#' @return NULL, invisibly.
 #'
 #' @export
 cache_rm <- function(names = NULL) {
@@ -158,11 +165,12 @@ cache_rm <- function(names = NULL) {
     }
   }
   assign(".cache_memory", cache, envir = .GlobalEnv)
+  invisible(NULL)
 }
 
-#' Gives all names in computation cache.
+#' List all names in the computation cache.
 #'
-#' @return A character vector of cache entry names
+#' @return A character vector of cache entry names.
 #'
 #' @export
 cache_list <- function() {
@@ -172,12 +180,29 @@ cache_list <- function() {
 
 # ------------------------------------------- private
 
+#' Initialize the cache if it does not exist.
+#'
+#' @return NULL, invisibly.
+#'
+#' @noRd
 .cache_init <- function() {
   if (!exists(".cache_memory", .GlobalEnv)) {
     assign(".cache_memory", list(), envir = .GlobalEnv)
   }
 }
 
+#' Cache a function in memory.
+#'
+#' @param version Cache version number.
+#' @param name Optional name for the cache entry.
+#' @param verbose Whether to output verbose messages.
+#' @param force Whether to force re-computation.
+#' @param cached_fn The function to cache.
+#'
+#' @return A wrapped function that caches its results.
+#'
+#' @importFrom utils capture.output
+#' @noRd
 .cache_mem_fn <- function(version = 0, name = NULL, verbose = FALSE, force = FALSE, cached_fn) {
   function(...) {
     if (is.null(name)) {
@@ -203,6 +228,18 @@ cache_list <- function() {
   }
 }
 
+#' Cache an expression in memory.
+#'
+#' @param version Cache version number.
+#' @param name Optional name for the cache entry.
+#' @param verbose Whether to output verbose messages.
+#' @param force Whether to force re-computation.
+#' @param cached_expr The expression result to cache.
+#' @param expr_code The deparsed expression code for hashing.
+#'
+#' @return The cached expression result.
+#'
+#' @noRd
 .cache_mem_expr <- function(
   version = 0, name = NULL, verbose = FALSE, force = FALSE, cached_expr, expr_code
 ) {

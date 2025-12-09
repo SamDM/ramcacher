@@ -2,12 +2,15 @@
 % Please edit documentation in R/lib.R
 \name{cache_rm}
 \alias{cache_rm}
-\title{Clears the computation cache.}
+\title{Clear the computation cache.}
 \usage{
 cache_rm(names = NULL)
 }
 \arguments{
 \item{names}{Remove only the given names.}
+}
+\value{
+NULL, invisibly.
 }
 \description{
 Clears all values from the cache, making it empty again.

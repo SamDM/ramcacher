@@ -2,13 +2,13 @@
 % Please edit documentation in R/lib.R
 \name{cache_list}
 \alias{cache_list}
-\title{Gives all names in computation cache.}
+\title{List all names in the computation cache.}
 \usage{
 cache_list()
 }
 \value{
-A character vector of cache entry names
+A character vector of cache entry names.
 }
 \description{
-Gives all names in computation cache.
+List all names in the computation cache.
 }
