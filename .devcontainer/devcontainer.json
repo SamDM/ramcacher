@@ -1,5 +1,5 @@
 {
-  "name": "singleplant-var-bethedge",
+  "name": "ramcacher",
   "build": {
     "dockerfile": "Dockerfile"
   },
