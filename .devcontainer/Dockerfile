@@ -32,14 +32,14 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 ENV LANG=en_US.UTF-8
 ENV LC_ALL=en_US.UTF-8
 
-# # GitHub CLI
-# RUN curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg \
-#     && chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg \
-#     && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
-#     && apt-get update \
-#     && apt-get install -y gh \
-#     && apt-get clean \
-#     && rm -rf /var/lib/apt/lists/*
+# GitHub CLI
+RUN curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg \
+    && chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg \
+    && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
+    && apt-get update \
+    && apt-get install -y gh \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 # Some install scripts assume bash, this makes following RUN commands use `bash` instead of `sh`.
 # The `-c` flag says: "accept a command instead of starting interactive mode".
@@ -83,8 +83,8 @@ RUN ln -s $NVM_DIR/versions/node/v${NODEJS_VERSION}*/bin/node /usr/local/bin/nod
 # --------
 # R (cran)
 
-RUN wget -qO- https://cloud.r-project.org/bin/linux/debian/marutter_pubkey.asc | tee /etc/apt/trusted.gpg.d/cran_debian_key.asc \
-    && add-apt-repository "deb https://cloud.r-project.org/bin/linux/debian $(lsb_release -cs)-cran40/" \
+RUN curl -fsSL 'https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x95C0FAF38DB3CCAD0C080A7BDC78B2DDEABC47B7' | gpg --dearmor -o /usr/share/keyrings/cran-archive-keyring.gpg \
+    && echo "deb [signed-by=/usr/share/keyrings/cran-archive-keyring.gpg] https://cloud.r-project.org/bin/linux/debian $(lsb_release -cs)-cran40/" | tee /etc/apt/sources.list.d/cran.list > /dev/null \
     && apt-get update && apt-get install -y --no-install-recommends \
       libcurl4-openssl-dev \
       libfontconfig1-dev \
