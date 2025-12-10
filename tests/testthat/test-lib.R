@@ -78,10 +78,11 @@ test_that("cache_list returns all cache entry names", {
   expect_setequal(result, c("key1", "key2", "key3"))
 })
 
-test_that("cache_list returns empty vector when cache is empty", {
+test_that("cache_list returns empty character vector when cache is empty", {
   cache_rm()
   result <- cache_list()
   expect_length(result, 0)
+  expect_type(result, "character")
 })
 
 test_that("cache_rm clears all entries when called without arguments", {

@@ -169,7 +169,7 @@ If you use ramcacher in your research, please cite it as:
   title = {ramcacher: In-Memory Caching for Functions and Expressions in R},
   year = {2025},
   url = {https://github.com/SamDM/ramcacher},
-  version = {0.1.0}
+  version = {0.2.0}
 }
 ```
 
@@ -182,5 +182,5 @@ ramcacher:
   title: "ramcacher: In-Memory Caching for Functions and Expressions in R"
   date: 2025
   url: https://github.com/SamDM/ramcacher
-  version: "0.1.0"
+  version: "0.2.0"
 ```

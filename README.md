@@ -123,7 +123,7 @@ cache_list()
 # Clear all cache entries
 cache_rm()
 cache_list()
-#> NULL
+#> character(0)
 ```
 
 ### Versioning and Forcing Recomputation
@@ -172,10 +172,10 @@ cache_rm()
 cached_fn <- cache_mem(verbose = TRUE) %at% function(x) x * 2
 
 cached_fn(5)  # Cache miss
-#> [cache_mem] [fn] [cached: FALSE] [name: fn::hash_fn.2a7dacd3-args.eb191209_v.0] [run: TRUE]
+#> [cache_mem] [fn] [cached: FALSE] [name: fn::hash_fn.7f35bf04-args.eb191209_v.0] [run: TRUE]
 #> [1] 10
 cached_fn(5)  # Cache hit
-#> [cache_mem] [fn] [cached: TRUE] [name: fn::hash_fn.2a7dacd3-args.eb191209_v.0] [run: FALSE]
+#> [cache_mem] [fn] [cached: TRUE] [name: fn::hash_fn.7f35bf04-args.eb191209_v.0] [run: FALSE]
 #> [1] 10
 ```
 
@@ -191,7 +191,7 @@ If you use ramcacher in your research, please cite it as:
   title = {ramcacher: In-Memory Caching for Functions and Expressions in R},
   year = {2025},
   url = {https://github.com/SamDM/ramcacher},
-  version = {0.1.0}
+  version = {0.2.0}
 }
 ```
 
@@ -204,5 +204,5 @@ ramcacher:
   title: "ramcacher: In-Memory Caching for Functions and Expressions in R"
   date: 2025
   url: https://github.com/SamDM/ramcacher
-  version: "0.1.0"
+  version: "0.2.0"
 ```

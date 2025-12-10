@@ -175,7 +175,12 @@ cache_rm <- function(names = NULL) {
 #' @export
 cache_list <- function() {
   .cache_init()
-  names(get(".cache_memory", .GlobalEnv))
+  result <- names(get(".cache_memory", .GlobalEnv))
+  if (is.null(result)) {
+    character(0)
+  } else {
+    result
+  }
 }
 
 # ------------------------------------------- private
