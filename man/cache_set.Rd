@@ -12,7 +12,7 @@ cache_set(name, value)
 \item{value}{The new value.}
 }
 \value{
-The value.
+The value (preserving visibility).
 }
 \description{
 Set one element of the computation cache.

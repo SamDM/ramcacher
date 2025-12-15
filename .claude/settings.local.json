@@ -5,7 +5,8 @@
       "Bash(curl:*)",
       "Bash(Rscript:*)",
       "Bash(git show:*)",
-      "Bash(gh issue view:*)"
+      "Bash(gh issue view:*)",
+      "Bash(git checkout:*)"
     ]
   }
 }
