@@ -10,7 +10,8 @@ cache_get(name)
 \item{name}{Name of cache value.}
 }
 \value{
-The cached value, or NULL if not found.
+The cached value, or NULL if not found. Returns invisibly if the
+value was originally set with an invisible value.
 }
 \description{
 Get one element from the computation cache.

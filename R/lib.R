@@ -121,12 +121,21 @@ cache_mem <- function(version = 0, name = NULL, verbose = FALSE, force = FALSE) 
 #'
 #' @param name Name of cache value.
 #'
-#' @return The cached value, or NULL if not found.
+#' @return The cached value, or NULL if not found. Returns invisibly if the
+#'   value was originally set with an invisible value.
 #'
 #' @export
 cache_get <- function(name) {
   .cache_init()
-  get(".cache_memory", .GlobalEnv)[[name]]
+  cached <- get(".cache_memory", .GlobalEnv)[[name]]
+  if (is.null(cached)) {
+    return(NULL)
+  }
+  if (cached$visible) {
+    cached$value
+  } else {
+    invisible(cached$value)
+  }
 }
 
 #' Set one element of the computation cache.
@@ -134,17 +143,23 @@ cache_get <- function(name) {
 #' @param name Name of cache value.
 #' @param value The new value.
 #'
-#' @return The value.
+#' @return The value (preserving visibility).
 #'
 #' @export
 cache_set <- function(name, value) {
   .cache_init()
   cache <- get(".cache_memory", .GlobalEnv)
+  # Capture both value and visibility state
+  wrapped <- withVisible(value)
   # Use single bracket with list() to properly store NULL values
   # (double bracket assignment with NULL removes the element)
-  cache[name] <- list(value)
+  cache[name] <- list(wrapped)
   assign(".cache_memory", cache, envir = .GlobalEnv)
-  value
+  if (wrapped$visible) {
+    wrapped$value
+  } else {
+    invisible(wrapped$value)
+  }
 }
 
 #' Clear the computation cache.
