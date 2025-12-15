@@ -3,8 +3,18 @@ FROM debian:12
 # -------------
 # General setup
 
-# Set a non-interactive mode for apt and install necessary tools
+# Some install scripts assume bash, this makes following RUN commands use `bash` instead of `sh`.
+# The `-c` flag says: "accept a command instead of starting interactive mode".
+SHELL ["/bin/bash", "-c"]
+
+# Set sane defaults for the year 2025
 ENV TZ=UTC
+ENV LANG=en_US.UTF-8
+ENV LC_ALL=en_US.UTF-8
+ENV TERM=xterm-256color
+ENV COLORTERM=truecolor
+
+# Set a non-interactive mode for apt and install necessary tools
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -28,31 +38,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && locale-gen \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
-
-ENV LANG=en_US.UTF-8
-ENV LC_ALL=en_US.UTF-8
-
-# GitHub CLI
-RUN curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg \
-    && chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg \
-    && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
-    && apt-get update \
-    && apt-get install -y gh \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
-
-# Some install scripts assume bash, this makes following RUN commands use `bash` instead of `sh`.
-# The `-c` flag says: "accept a command instead of starting interactive mode".
-SHELL ["/bin/bash", "-c"]
-
-# -------------
-# Helix editor
-
-ARG HELIX_VERSION=25.07.1
-RUN HELIX_FILE_VERSION=$(echo ${HELIX_VERSION} | sed 's/\.0/./g') \
-    && curl -LO "https://github.com/helix-editor/helix/releases/download/${HELIX_VERSION}/helix_${HELIX_FILE_VERSION}-1_amd64.deb" \
-    && dpkg -i helix_${HELIX_FILE_VERSION}-1_amd64.deb \
-    && rm helix_${HELIX_FILE_VERSION}-1_amd64.deb
 
 # -------------
 # AI assistants
@@ -80,12 +65,30 @@ RUN ln -s $NVM_DIR/versions/node/v${NODEJS_VERSION}*/bin/node /usr/local/bin/nod
     && ln -s $NVM_DIR/versions/node/v${NODEJS_VERSION}*/bin/claude /usr/local/bin/claude \
     && ln -s $NVM_DIR/versions/node/v${NODEJS_VERSION}*/bin/gemini /usr/local/bin/gemini
 
+# ------------
+# helix editor
+
+ENV EDITOR=hx
+ARG HELIX_VERSION=25.07.1
+RUN HELIX_FILE_VERSION=$(echo ${HELIX_VERSION} | sed 's/\.0/./g') \
+    && curl -LO "https://github.com/helix-editor/helix/releases/download/${HELIX_VERSION}/helix_${HELIX_FILE_VERSION}-1_amd64.deb" \
+    && dpkg -i helix_${HELIX_FILE_VERSION}-1_amd64.deb \
+    && rm helix_${HELIX_FILE_VERSION}-1_amd64.deb
+
+# ----------
+# GitHub CLI
+RUN curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg \
+    && chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg \
+    && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
+    && apt-get update \
+    && apt-get install -y gh \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
 # --------
 # R (cran)
 
-RUN curl -fsSL 'https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x95C0FAF38DB3CCAD0C080A7BDC78B2DDEABC47B7' | gpg --dearmor -o /usr/share/keyrings/cran-archive-keyring.gpg \
-    && echo "deb [signed-by=/usr/share/keyrings/cran-archive-keyring.gpg] https://cloud.r-project.org/bin/linux/debian $(lsb_release -cs)-cran40/" | tee /etc/apt/sources.list.d/cran.list > /dev/null \
-    && apt-get update && apt-get install -y --no-install-recommends \
+RUN apt-get update && apt-get install -y --no-install-recommends \
       libcurl4-openssl-dev \
       libfontconfig1-dev \
       libfreetype6-dev \
@@ -110,9 +113,25 @@ RUN R -e "install.packages(c('languageserver', 'httpgd'), Ncpus=parallel::detect
 # R packages: project dependencies
 RUN R -e "install.packages('devtools', Ncpus=parallel::detectCores())"
 
+# ----------------
+# Dev user account
 
-# -----
-# Done!
+# Create a user 'vscode' with a UID that matches the host (default 1000)
+ARG USERNAME=vscode
+ARG USER_UID=1000
+ARG USER_GID=$USER_UID
+
+# Create the user
+RUN groupadd --gid $USER_GID $USERNAME \
+    && useradd --uid $USER_UID --gid $USER_GID -m -s /bin/bash $USERNAME \
+    # Allow no-password sudo
+    && apt-get update \
+    && apt-get install -y sudo \
+    && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
+    && chmod 0440 /etc/sudoers.d/$USERNAME
+    
+# Switch to dev user
+USER $USERNAME
 
 # Set the default command for the container to be a bash shell
 # This is ideal for a devcontainer as it allows for interactive use

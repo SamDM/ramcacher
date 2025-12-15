@@ -3,7 +3,9 @@
     "allow": [
       "Bash(docker build:*)",
       "Bash(curl:*)",
-      "Bash(Rscript:*)"
+      "Bash(Rscript:*)",
+      "Bash(git show:*)",
+      "Bash(gh issue view:*)"
     ]
   }
 }
