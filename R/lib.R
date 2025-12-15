@@ -140,7 +140,9 @@ cache_get <- function(name) {
 cache_set <- function(name, value) {
   .cache_init()
   cache <- get(".cache_memory", .GlobalEnv)
-  cache[[name]] <- value
+  # Use single bracket with list() to properly store NULL values
+  # (double bracket assignment with NULL removes the element)
+  cache[name] <- list(value)
   assign(".cache_memory", cache, envir = .GlobalEnv)
   value
 }
@@ -218,7 +220,7 @@ cache_list <- function() {
     }
     cache_name <- sprintf("fn::%s_v.%s", as.character(name), as.character(version))
 
-    is_cached <- !is.null(cache_get(cache_name))
+    is_cached <- cache_name %in% cache_list()
     must_run <- !is_cached | force
     if (verbose) {
       message(glue::glue(
@@ -254,7 +256,7 @@ cache_list <- function() {
   }
   cache_name <- sprintf("expr::%s_v.%s", as.character(name), as.character(version))
 
-  is_cached <- !is.null(cache_get(cache_name))
+  is_cached <- cache_name %in% cache_list()
   must_run <- !is_cached | force
   if (verbose) {
     message(glue::glue(
