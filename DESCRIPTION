@@ -1,6 +1,6 @@
 Package: ramcacher
 Title: In-Memory Caching for Functions and Expressions
-Version: 0.2.0
+Version: 0.2.1
 Authors@R: 
     person("Sam", "De Meyer", , "sam.demeyer93@gmail.com", role = c("aut", "cre"))
 Description: Cache the results of functions and expressions in RAM for faster
